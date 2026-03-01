@@ -10,16 +10,41 @@ import WordList from "./pages/WordList";
 import WordDetails from "./pages/WordDetails";
 import WordForm from "./pages/WordForm";
 import NotFound from "./pages/NotFound";
+import UpdatePassword from "./pages/UpdatePassword";
 
 const queryClient = new QueryClient();
 
+/**
+ * ProtectedRoute Wrapper
+ * 
+ * Intercepts routing attempts to ensure the user is actively authenticated.
+ * Handles intermediate loading states and catches password-recovery flows
+ * to ensure users complete required security updates before accessing the dashboard.
+ * 
+ * @component
+ * @param {Object} props - Component properties
+ * @param {React.ReactNode} props.children - The protected elements to render if authorized.
+ * @returns {JSX.Element} The requested route or a redirect to the Auth panel.
+ */
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
-  const { user, loading } = useAuth();
+  const { user, loading, isPasswordRecovery } = useAuth();
   if (loading) return <div className="flex min-h-screen items-center justify-center text-muted-foreground">Loading...</div>;
   if (!user) return <Navigate to="/auth" replace />;
+  if (isPasswordRecovery) return <UpdatePassword />;
   return <>{children}</>;
 }
 
+/**
+ * AuthRoute Wrapper
+ * 
+ * Prevents actively authenticated users from viewing the login/registration panels.
+ * Automatically routes authenticated users immediately to their dashboard context.
+ * 
+ * @component
+ * @param {Object} props - Component properties
+ * @param {React.ReactNode} props.children - The auth panels to render if unauthenticated.
+ * @returns {JSX.Element} The auth interface or a redirect to the App dashboard.
+ */
 function AuthRoute({ children }: { children: React.ReactNode }) {
   const { user, loading } = useAuth();
   if (loading) return <div className="flex min-h-screen items-center justify-center text-muted-foreground">Loading...</div>;
@@ -27,6 +52,15 @@ function AuthRoute({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }
 
+/**
+ * Root App Component
+ * 
+ * Configures the global providers (React Query, Toasters, Tooltips, Authentication)
+ * and defines the application's top-level client-side routing hierarchy.
+ * 
+ * @component
+ * @returns {JSX.Element} The fully configured application element tree.
+ */
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>

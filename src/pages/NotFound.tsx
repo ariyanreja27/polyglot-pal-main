@@ -1,6 +1,19 @@
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 
+/**
+ * NotFound Component
+ * 
+ * A catch-all route component displayed when a user attempts to 
+ * navigate to a URL that does not exist within the application's
+ * defined React Router routes. Automatically logs the 404 attempt.
+ * 
+ * @component
+ * @example
+ * <Route path="*" element={<NotFound />} />
+ * 
+ * @returns {JSX.Element} The rendered 404 error page.
+ */
 const NotFound = () => {
   const location = useLocation();
 

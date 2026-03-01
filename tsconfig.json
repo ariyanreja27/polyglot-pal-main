@@ -1,14 +1,27 @@
 {
   "files": [],
-  "references": [{ "path": "./tsconfig.app.json" }, { "path": "./tsconfig.node.json" }],
+  "references": [
+    {
+      "path": "./tsconfig.app.json"
+    },
+    {
+      "path": "./tsconfig.node.json"
+    }
+  ],
   "compilerOptions": {
+    // Base directory for resolving non-relative module names
     "baseUrl": ".",
+    // Map path aliases to physical file paths
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": [
+        "./src/*"
+      ]
     },
     "noImplicitAny": false,
     "noUnusedParameters": false,
+    // Skip type checking of declaration files (.d.ts) for performance
     "skipLibCheck": true,
+    // Allow JavaScript files to be compiled
     "allowJs": true,
     "noUnusedLocals": false,
     "strictNullChecks": false

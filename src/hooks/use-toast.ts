@@ -30,21 +30,21 @@ type ActionType = typeof actionTypes;
 
 type Action =
   | {
-      type: ActionType["ADD_TOAST"];
-      toast: ToasterToast;
-    }
+    type: ActionType["ADD_TOAST"];
+    toast: ToasterToast;
+  }
   | {
-      type: ActionType["UPDATE_TOAST"];
-      toast: Partial<ToasterToast>;
-    }
+    type: ActionType["UPDATE_TOAST"];
+    toast: Partial<ToasterToast>;
+  }
   | {
-      type: ActionType["DISMISS_TOAST"];
-      toastId?: ToasterToast["id"];
-    }
+    type: ActionType["DISMISS_TOAST"];
+    toastId?: ToasterToast["id"];
+  }
   | {
-      type: ActionType["REMOVE_TOAST"];
-      toastId?: ToasterToast["id"];
-    };
+    type: ActionType["REMOVE_TOAST"];
+    toastId?: ToasterToast["id"];
+  };
 
 interface State {
   toasts: ToasterToast[];
@@ -100,9 +100,9 @@ export const reducer = (state: State, action: Action): State => {
         toasts: state.toasts.map((t) =>
           t.id === toastId || toastId === undefined
             ? {
-                ...t,
-                open: false,
-              }
+              ...t,
+              open: false,
+            }
             : t,
         ),
       };
@@ -134,6 +134,16 @@ function dispatch(action: Action) {
 
 type Toast = Omit<ToasterToast, "id">;
 
+/**
+ * Global Toast Dispatcher
+ * 
+ * Imperative function to create and dispatch a new toast notification event to the state machine.
+ * Can be used globally outside of React component contexts.
+ * 
+ * @function toast
+ * @param {Toast} props - Toast configuration properties (title, description, variant, etc.)
+ * @returns {Object} Methods to update or manually dismiss the individually spawned toast (id, dismiss, update).
+ */
 function toast({ ...props }: Toast) {
   const id = genId();
 
@@ -163,6 +173,20 @@ function toast({ ...props }: Toast) {
   };
 }
 
+/**
+ * useToast Hook
+ * 
+ * Specialized hook that exposes the global toast dispatcher and active toast state.
+ * Use this hook to trigger localized notifications (`toast()`) or dismiss specific alerts
+ * across the application.
+ * 
+ * @hook
+ * @example
+ * const { toast } = useToast();
+ * toast({ title: "Success", description: "Saved!" });
+ * 
+ * @returns {Object} State and methods (toast, dismiss) for notification management.
+ */
 function useToast() {
   const [state, setState] = React.useState<State>(memoryState);
 

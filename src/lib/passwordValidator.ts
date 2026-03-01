@@ -3,6 +3,15 @@ export interface PasswordValidation {
   errors: string[];
 }
 
+/**
+ * Validates a plaintext password string against strict strength requirements.
+ * Ensures minimum complexity (length, uppercase, lowercase, numbers, specials)
+ * for reliable account security.
+ * 
+ * @function validatePassword
+ * @param {string} password - The unencrypted string to evaluate.
+ * @returns {PasswordValidation} Object outlining if it passed, and standard error list if not.
+ */
 export const validatePassword = (password: string): PasswordValidation => {
   const errors: string[] = [];
 

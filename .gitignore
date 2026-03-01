@@ -11,6 +11,9 @@ node_modules
 dist
 dist-ssr
 *.local
+.env
+.env.local
+.env.*.local
 
 # Editor directories and files
 .vscode/*
@@ -22,3 +25,19 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+*.tsbuildinfo
+
+# Vite temp files
+vite.config.ts.timestamp-*.mjs
+
+# Testing
+/coverage
+
+# Linting
+.eslintcache
+
+# Project specific root temp files
+temp_*.txt
+*.zip
+Amiri-*/
+Amiri-*.ttf

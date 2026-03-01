@@ -1,7 +1,9 @@
 import type { Config } from "tailwindcss";
 
 export default {
+  // Support for dark mode using a CSS class (e.g., .dark)
   darkMode: ["class"],
+  // Files where Tailwind should scan for class names
   content: ["./pages/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}", "./app/**/*.{ts,tsx}", "./src/**/*.{ts,tsx}"],
   prefix: "",
   theme: {
@@ -13,10 +15,14 @@ export default {
       },
     },
     extend: {
+      // Custom font families defined in index.css
       fontFamily: {
         sans: ['Inter', 'sans-serif'],
-        display: ['Outfit', 'sans-serif'],
+        serif: ['"Playfair Display"', 'serif'],
+        mono: ['VT323', 'monospace'],
+        dot: ['VT323', 'monospace'],
       },
+      // Theme colors using CSS variables (standard shadcn/ui pattern)
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -75,6 +81,7 @@ export default {
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
+      // Custom animation keyframes
       keyframes: {
         "accordion-down": {
           from: {
@@ -92,12 +99,18 @@ export default {
             height: "0",
           },
         },
+        "star-pop": {
+          "0%, 100%": { transform: "scale(1)" },
+          "50%": { transform: "scale(1.4)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "star-pop": "star-pop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)",
       },
     },
   },
+  // Plugins for extra functionality like animations
   plugins: [require("tailwindcss-animate")],
 } satisfies Config;
