@@ -41,3 +41,5 @@ temp_*.txt
 *.zip
 Amiri-*/
 Amiri-*.ttf
+.vercel
+.env*.local
