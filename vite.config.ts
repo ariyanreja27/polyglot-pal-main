@@ -4,7 +4,6 @@ import * as path from "path";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
-  base: "/neurolex.github.io/",
   server: {
     // Listen on all network interfaces (::)
     host: "::",
